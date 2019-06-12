@@ -2,6 +2,7 @@ console.log("server.js working fine");
 
 var express = require("express");
 var exphbs = require('express-handlebars');
+// sets handlebars //
 
 var app = express();
 
