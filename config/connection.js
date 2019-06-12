@@ -7,6 +7,8 @@ var connection = mysql.createConnection({
     database: "burgers_db"
 });
 
+// does it need port? what kind??
+
 connection.connect(function (err) {
     if (err) {
         console.error("error connecting: " + err.stack);
@@ -18,3 +20,5 @@ connection.connect(function (err) {
 module.exports = connection;
 
 //pseudocoded through many refrences. Reminder to ask a ta for help cleaning it up.
+
+// issues connecting to database 
