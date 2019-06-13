@@ -1,35 +1,68 @@
-var mysql = require("mysql");
+const mysql = require("mysql");
 
-var connection = mysql.createConnection({
-    host: "127.0.0.1",
-    user: "root",
-    password: "root",
-    database: "burgers_db"
-});
+const createTable = "CREATE TABLE burgers " +
+    "( " +
+    "id int NOT NULL AUTO_INCREMENT, " +
+    "burger_name VARCHAR(255) NOT NULL, " +
+    "devoured BOOLEAN, " +
+    "PRIMARY KEY (id) " +
+    "); ";
 
-if (process.env.JAWSDB_URL) {
-    connection = mysql.createConnection(process.env.JAWSDB_URL);
-} else {
-    connection = mysql.createConnection({
-        host: 'localhost',
-        user: "root",
-        password: "root",
-        database: "burgers_db"
+const seedQuery = "INSERT INTO burgers " +
+    "(burger_name, devoured) " +
+    "VALUES " +
+    " ('She’s A Super Leek Burger', false), " +
+    "('Hit Me With Your Best Shallot Burger', false), " +
+    " ('Open Sesame Burger', false);";
+
+// always use a environment variable, if it doesn't exist, create it.
+const connection = mysql.createConnection(process.env.JAWSDB_URL);
+
+function createTb() {
+    connection.query(createTable, function (err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(result);
+            console.log("burgers table was created");
+        }
     });
-};
+}
 
-// does it need port? what kind??
+function connect() {
+    connection.connect(function (err) {
+        if (err) {
+            console.error("error connecting: " + err.stack);
+            return;
+        }
+        console.log("connected as id " + connection.threadId);
+    });
+}
 
-connection.connect(function (err) {
-    if (err) {
-        console.error("error connecting: " + err.stack);
-        return;
-    }
-    console.log("connected as id " + connection.threadId);
-});
+function seed() {
+    connection.query(seedQuery, function (err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(result);
+            console.log("burgers table was seeded");
+        }
+    });
+}
+
+function quit() {
+    // upon exiting the application, you want to clean-up existing
+    // connections, or you'll mess up the database
+    connection.end();
+}
+
+// connect at top-level
+connect();
+// create the table in the new database and setup the connection for
+// other modules in the future
+createTb();
+// seed the database
+seed();
 
 module.exports = connection;
-
-//pseudocoded through many refrences. Reminder to ask a ta for help cleaning it up.
-
-// issues connecting to database 
+module.exports = quit;
