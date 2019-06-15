@@ -3,9 +3,13 @@ console.log("server.js working fine");
 var express = require("express");
 var exphbs = require('express-handlebars');
 // sets handlebars //
-
+var bodyParser = require('body-parser');
 var app = express();
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }));
+app.use(bodyParser.text({ type: 'text/html' }));
 app.use(express.static("public"));
 
 app.use(express.json());
