@@ -65,4 +65,3 @@ createTb();
 seed();
 
 module.exports = connection;
-module.exports = quit;
