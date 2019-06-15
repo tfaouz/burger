@@ -1,9 +1,10 @@
 const mysql = require("mysql");
 
+const dropTable = "DROP TABLE IF EXISTS burgers;"
 const createTable = "CREATE TABLE burgers " +
     "( " +
     "id int NOT NULL AUTO_INCREMENT, " +
-    "burger_name VARCHAR(255) NOT NULL, " +
+    "burger_name VARCHAR(255) NOT NULL UNIQUE, " +
     "devoured BOOLEAN, " +
     "PRIMARY KEY (id) " +
     "); ";
@@ -17,6 +18,17 @@ const seedQuery = "INSERT INTO burgers " +
 
 // always use a environment variable, if it doesn't exist, create it.
 const connection = mysql.createConnection(process.env.JAWSDB_URL);
+
+function dropTb() {
+    connection.query(dropTable, function (err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(result);
+            console.log("burgers table was dropped");
+        }
+    });
+}
 
 function createTb() {
     connection.query(createTable, function (err, result) {
@@ -58,6 +70,8 @@ function quit() {
 
 // connect at top-level
 connect();
+// drop table if it exists
+dropTb();
 // create the table in the new database and setup the connection for
 // other modules in the future
 createTb();
