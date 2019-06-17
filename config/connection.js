@@ -17,7 +17,7 @@ const seedQuery = "INSERT INTO burgers " +
     " ('Open Sesame Burger', false);";
 
 // always use a environment variable, if it doesn't exist, create it.
-const connection = mysql.createConnection(process.env.JAWSDB_URL);
+const connection = mysql.createConnection('mysql://a3bj45g3p9j9cxwk:h8ioh24ztt5j92sk@u0zbt18wwjva9e0v.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/dqnvdkpu5qyrq85q');
 
 function dropTb() {
     connection.query(dropTable, function (err, result) {
