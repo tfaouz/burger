@@ -15,11 +15,14 @@ router.post('/burgers/update', function (req, res) {
         res.redirect('/');
     })
 })
+// Changed from router.put to router. post fixed issue
 
 router.post('/burgers/create', function (req, res) {
     console.log(req.body);
     burger.create(req.body.burger_name, function (result) {
         console.log(result);
+        res.redirect('/');
+        // needs res.redirect...
     })
 })
 
